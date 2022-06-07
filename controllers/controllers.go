@@ -28,3 +28,10 @@ func BuscarPorId(write http.ResponseWriter, request *http.Request) {
 	json.NewEncoder(write).Encode(personalidade)
 
 }
+
+func CriarPersonalidade(write http.ResponseWriter, request *http.Request) {
+	var novaPersonalidade models.Personalidade
+	json.NewDecoder(request.Body).Decode(&novaPersonalidade)
+	database.DB.Create(&novaPersonalidade)
+	json.NewEncoder(write).Encode(novaPersonalidade)
+}
