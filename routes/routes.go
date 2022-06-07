@@ -5,11 +5,13 @@ import (
 	"net/http"
 
 	"github.com/cledson-leite/go_api_rest.git/controllers"
+	"github.com/cledson-leite/go_api_rest.git/middleware"
 	"github.com/gorilla/mux"
 )
 
 func HandleRequest()  {
 	router := mux.NewRouter()
+	router.Use(middleware.ContentTypeMiddleware)
 
 	router.HandleFunc("/", controllers.Home)
 
