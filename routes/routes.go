@@ -26,6 +26,10 @@ func HandleRequest()  {
 		).Methods("Post")
 
 	router.HandleFunc(
+		"/api/personalidades/{id}", controllers.EditarPersonalidade,
+		).Methods("Put")
+
+	router.HandleFunc(
 		"/api/personalidades/{id}", controllers.DeletarPersonalidade,
 		).Methods("Delete")
 		
