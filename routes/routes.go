@@ -6,6 +6,7 @@ import (
 
 	"github.com/cledson-leite/go_api_rest.git/controllers"
 	"github.com/cledson-leite/go_api_rest.git/middleware"
+	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 )
 
@@ -35,5 +36,13 @@ func HandleRequest()  {
 		"/api/personalidades/{id}", controllers.DeletarPersonalidade,
 		).Methods("Delete")
 		
-	log.Fatal(http.ListenAndServe(":8000", router))
+	log.Fatal(
+		http.ListenAndServe(
+			":8000", handlers.CORS(
+				handlers.AllowedOrigins(
+					[] string {"*"},
+				),
+			)(router),
+		),
+	)
 }
