@@ -4,8 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"strconv"
-
+	"github.com/cledson-leite/go_api_rest.git/database"
 	"github.com/cledson-leite/go_api_rest.git/models"
 	"github.com/gorilla/mux"
 )
@@ -15,16 +14,17 @@ func Home(write http.ResponseWriter, request *http.Request)  {
 }
 
 func ListarPersonalidades(write http.ResponseWriter, request *http.Request){
-	json.NewEncoder(write).Encode(models.Personalidades)
+	var personalidades []models.Personalidade
+	database.DB.Find(&personalidades)
+
+	json.NewEncoder(write).Encode(personalidades)
 }
 
 func BuscarPorId(write http.ResponseWriter, request *http.Request) {
 	vars := mux.Vars(request)
 	id := vars["id"]
+	var personalidade models.Personalidade
+	database.DB.First(&personalidade, id)
+	json.NewEncoder(write).Encode(personalidade)
 
-	for _, personalidade := range models.Personalidades {
-		if strconv.Itoa(personalidade.Id) == id {
-			json.NewEncoder(write).Encode(personalidade)
-		}
-	}
 }
